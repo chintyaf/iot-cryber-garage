@@ -2,41 +2,49 @@
 /* ── FUNGSI ASYNC UNTUK MENGAMBIL DATA SENSOR LIVE ── */
 async function fetchLiveSensorData() {
     try {
-        // Sesuaikan URL ini dengan route di api.php kamu (misal: '/api/sensors')
         const response = await fetch("/api/panel/sensor-logs");
         const result = await response.json();
-
-        // Mengambil objek 'terkini' dari response Laravel kamu
         const latestData = result.terkini;
 
         if (latestData) {
             const currentDist = latestData.parking_distance;
             const currentGas = latestData.gas_value;
 
-            /* 1. UPDATE ANIMASI LINGKARAN JARAK (DISTANCE RING) */
-            const maxDist = 300; // Asumsi jarak maksimal sensor adalah 300 cm
-            // Cegah jarak melebihi batas maksimal agar animasi ring tidak error/terbalik
-            const safeDist = currentDist > maxDist ? maxDist : currentDist;
+            /* 1. UPDATE ANIMASI LINGKARAN JARAK */
+            const maxDist = 30; // Batas maksimal cm
+            const r = 80; // Radius sesuai di HTML
+            const circ = 2 * Math.PI * r; // Keliling lingkaran ≈ 502.6
 
-            const pct = safeDist / maxDist;
-            const circ = 2 * Math.PI * 80;
-            const offset = circ * (1 - pct * 0.85);
-            document.getElementById("ringFill").style.strokeDashoffset = offset;
+            // Batasi agar tidak minus dan tidak lebih dari maxDist
+            const safeDist = Math.min(Math.max(currentDist, 0), maxDist);
 
-            /* 2. UPDATE TEKS JARAK */
+            // Perhitungan Persentase:
+            // Jika ingin: 30cm = Ring Kosong, 0cm = Ring Penuh (Logika Parkir)
+            const pct = (maxDist - safeDist) / maxDist;
+
+            // Jika ingin: 0cm = Ring Kosong, 30cm = Ring Penuh, gunakan:
+            // const pct = safeDist / maxDist;
+
+            const offset = circ * (1 - pct);
+
+            const ringFill = document.getElementById("ringFill");
+            ringFill.style.strokeDasharray = circ;
+            ringFill.style.strokeDashoffset = offset;
+
+            /* 2. UPDATE TEKS */
             document.getElementById("distVal").textContent = currentDist;
             document.getElementById("distLabel").textContent = currentDist;
-
-            /* 3. UPDATE TEKS DAN WARNA GAS */
             document.getElementById("gasVal").textContent = currentGas;
 
-            // Logika pewarnaan otomatis berdasarkan tingkat gas
-            document.getElementById("gasVal").className =
-                currentGas > 400
-                    ? "s-val danger"
+            // Update Status Gas
+            const gasElement = document.getElementById("gasVal");
+            gasElement.className =
+                "s-val " +
+                (currentGas > 400
+                    ? "danger"
                     : currentGas > 350
-                      ? "s-val warn"
-                      : "s-val ok";
+                      ? "warn"
+                      : "ok");
         }
     } catch (error) {
         console.error("Gagal mengambil data sensor live:", error);
@@ -48,4 +56,5 @@ async function fetchLiveSensorData() {
 fetchLiveSensorData();
 
 // 2. Gunakan setInterval untuk mengecek data baru ke database setiap 4 detik
-setInterval(fetchLiveSensorData, 1 * 60 * 1000);
+// setInterval(fetchLiveSensorData, 1 * 60 * 1000);
+setInterval(fetchLiveSensorData, 1000);

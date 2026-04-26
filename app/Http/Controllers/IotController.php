@@ -49,27 +49,31 @@ class IotController extends Controller
 
     public function syncGas(Request $request)
     {
-        // 1. Validate only the gas data
+        // 1. Validasi data gas_value dan jarak yang dikirim dari Arduino
         $validated = $request->validate([
-            'gas_value' => 'required|numeric'
+            'gas_value' => 'required|numeric',
+            'jarak'     => 'required|numeric' // Tambahkan validasi untuk jarak
         ]);
 
         $gasValue = $validated['gas_value'];
+        $jarak    = $validated['jarak'];      // Tangkap nilai jarak
+
         $status = ($gasValue > 400) ? 'TINGGI' : 'NORMAL';
 
         try {
-            // 2. Sensor Historis (Parking distance left null)
+            // 2. Sensor Historis (Masukkan nilai jarak yang sebelumnya null)
             SensorLog::create([
                 'gas_value' => $gasValue,
-                'status' => $status
+                'parking_distance'     => $jarak,        // Simpan ke DB. Pastikan nama kolom sesuai (misal: 'jarak' atau 'distance')
+                'status'    => $status
             ]);
 
-            // 3. UI Dashboard Log
+            // 3. UI Dashboard Log (Tetap fokus pada Gas Alert sesuai aslinya)
             SystemLog::create([
-                'type' => 'GAS ALERT',
+                'type'      => 'GAS ALERT',
                 'parameter' => 'Gas MQ-2',
-                'value' => $gasValue . ' ppm',
-                'status' => $status
+                'value'     => $gasValue . ' ppm',
+                'status'    => $status
             ]);
 
              return response()->json(['status' => 'success']);

@@ -257,7 +257,7 @@ main {
     stroke-width: 8;
     stroke-linecap: round;
     stroke-dasharray: 502;
-    stroke-dashoffset: 180;
+    stroke-dashoffset: 0;
     filter: drop-shadow(0 0 6px var(--accent));
     transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
 }

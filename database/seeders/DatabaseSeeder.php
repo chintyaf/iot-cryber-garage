@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         // Membuat data simulasi selama 10 jam terakhir
         for ($i = 10; $i >= 0; $i--) {
             DB::table('sensor_logs')->insert([
-                'parking_distance' => rand(50, 300), // cm
+                'parking_distance' => rand(5, 30), // cm
                 'gas_value'        => rand(100, 600), // ppm
                 'status'           => 'Normal',
                 'created_at'       => Carbon::now()->subHours($i),
