@@ -7,10 +7,18 @@ use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\SensorLogController;
 use App\Http\Controllers\ParkingLogController;
 use App\Http\Controllers\SystemLogController;
+use App\Http\Controllers\IotController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:sanctum');
+
+
+
+Route::post('/iot/sync/gas', [IotController::class, 'syncGas']);
+Route::post('/iot/sync/parking', [IotController::class, 'syncParking']);
+Route::post('/iot/device/{name}', [DeviceController::class, 'syncFanStatus']);
+
 
 
 Route::get('/panel/sensor-logs', [DashboardController::class, 'getSensorLogs']);

@@ -4,7 +4,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Cyber-Garage Chronicles — Central Cloud</title>
+        <title>IoT UTS - Rasberry Pie</title>
         <link
             href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap"
             rel="stylesheet"
@@ -65,13 +65,13 @@
                             />
                         </svg>
                         <div class="distance-center">
-                            <div class="distance-value" id="distVal">160</div>
+                            <div class="distance-value" id="distVal">0</div>
                             <div class="distance-unit">CM</div>
                         </div>
                     </div>
                     <div class="distance-label">JARAK AKHIR</div>
                     <div class="distance-main-label">
-                        JARAK AKHIR: <span id="distLabel">160</span> CM
+                        JARAK AKHIR: <span id="distLabel">0</span> CM
                     </div>
                     <div class="distance-sub">
                         Current Final Parking Distance
@@ -84,7 +84,7 @@
                         </div>
                         <div class="status-item">
                             <div class="s-label">Gas (ppm)</div>
-                            <div class="s-val warn" id="gasVal">342</div>
+                            <div class="s-val warn" id="gasVal">0</div>
                         </div>
                         <div class="status-item">
                             <div class="s-label">Kipas</div>
@@ -100,24 +100,26 @@
                 </div>
 
                 <!-- 2. Manual Override -->
-                <div class="panel fan-panel">
+               <div class="panel fan-panel">
                     <div class="panel-title">Panel Kendali Manual</div>
                     <div class="fan-status-row">
                         <div class="fan-indicator">
                             <div class="fan-dot" id="fanDot"></div>
-                            <span id="fanStatusText" style="color: var(--muted)"
-                                >EXHAUST FAN — STANDBY</span
-                            >
+                            <span id="fanStatusText" style="color: var(--muted)">EXHAUST FAN — STANDBY</span>
                         </div>
                     </div>
 
                     <div class="fan-icon" id="fanIcon">🌀</div>
 
                     <button class="btn-fan" id="btnFan" onclick="toggleFan()">
-                        ⚡ NYALAKAN KIPAS (Manual Override)
+                        ⚡ NYALAKAN KIPAS
                     </button>
 
-                    <div class="override-badge">
+                    <button class="btn-auto-reset" id="btnAuto" onclick="resetToAuto()" style="margin-top: 10px; width: 100%; padding: 10px; cursor: pointer; border-radius: 8px; border: 1px solid var(--primary); background: transparent; color: var(--primary); font-weight: bold;">
+                        🔄 KEMBALI KE MODE AUTO
+                    </button>
+
+                    <div class="override-badge" style="margin-top: 15px;">
                         MODE: <span id="overrideMode">AUTO</span> &nbsp;|&nbsp;
                         LAST: <span id="lastCmd">—</span>
                     </div>
@@ -162,14 +164,21 @@
             </div>
 
             <!-- 4. LOG TABLE / CARDS -->
-            <div class="panel log-panel">
-                <div class="log-header">
-                    <div class="panel-title" style="margin-bottom: 0">
-                        Record Sensor &amp; Actuator Logs
+           <div class="panel log-panel">
+                <div class="log-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div class="panel-title" style="margin-bottom: 0">
+                            Record Sensor &amp; Actuator Logs
+                        </div>
+                        <div class="log-count" id="logCount">
+                            Menampilkan 6 entri terbaru
+                        </div>
                     </div>
-                    <div class="log-count" id="logCount">
-                        Menampilkan 6 entri terbaru
-                    </div>
+
+                    <a href="{{ route('system-log') }}" class="btn-view-all" style="color: var(--muted)">
+                        Lihat Semua
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
 
                 <!-- Desktop: table view -->
@@ -193,6 +202,8 @@
 
         <!-- TOAST -->
         <div class="notif-toast" id="toast"></div>
+        <script src="https://cdn.jsdelivr.net/npm/pusher-js@8.3.0/dist/web/pusher.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.16.1/dist/echo.iife.js"></script>
 
         <script src="{{ asset('script/app.js') }}"></script>
         <script src="{{ asset('script/fan.js') }}"></script>

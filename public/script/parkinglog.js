@@ -53,7 +53,7 @@ async function renderParkChart() {
                     x: {
                         grid: { display: false },
                         ticks: {
-                            color: "#4a6580",
+                            color: "#7998b8",
                             font: { family: "Share Tech Mono", size: 9 },
                         },
                     },
@@ -61,7 +61,7 @@ async function renderParkChart() {
                         beginAtZero: true,
                         grid: { color: "rgba(26,48,80,0.6)" },
                         ticks: {
-                            color: "#4a6580",
+                            color: "#7998b8",
                             font: { family: "Share Tech Mono", size: 9 },
                             stepSize: 1, // Karena jumlah parkir biasanya bulat
                         },
@@ -76,3 +76,5 @@ async function renderParkChart() {
 
 // Jalankan fungsi
 renderParkChart();
+
+setInterval(renderParkChart, 5 * 60 * 1000);

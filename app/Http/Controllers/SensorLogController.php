@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SensorUpdated;
 use Illuminate\Http\Request;
 use App\Models\SensorLog; // Pastikan Model sudah dibuat
 use Carbon\Carbon;
@@ -66,10 +67,12 @@ public function store(Request $request)
         'status'           => $validated['status'] ?? 'Aman',
     ]);
 
+    broadcast(new SensorUpdated($log))->toOthers();
+
     return response()->json([
         'status'  => 'success',
-        'message' => 'Data sensor berhasil disimpan',
-        'data'    => $log
+        // 'message' => 'Data sensor berhasil disimpan',
+        // 'data'    => $log
     ], 201);
 }
 }

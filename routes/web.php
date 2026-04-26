@@ -23,6 +23,9 @@ Route::get('/', function () {
     return view('dashboard');
 });
 
+Route::get('/system-log', function () {
+    return view('system-log');
+})->name('system-log');
 // ---------------------------------------------------------
 // 1. KENDALI ALAT (Device Control - Kipas Exhaust)
 // ---------------------------------------------------------

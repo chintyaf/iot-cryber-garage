@@ -48,4 +48,4 @@ async function fetchLiveSensorData() {
 fetchLiveSensorData();
 
 // 2. Gunakan setInterval untuk mengecek data baru ke database setiap 4 detik
-setInterval(fetchLiveSensorData, 1000);
+setInterval(fetchLiveSensorData, 1 * 60 * 1000);

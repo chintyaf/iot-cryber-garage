@@ -9,7 +9,7 @@
     --yellow: #ffd700;
     --red: #ff3a3a;
     --text: #c8dff0;
-    --muted: #4a6580;
+    --muted: #7998b8;
     --glow: 0 0 20px rgba(0, 212, 255, 0.35);
     --glow2: 0 0 20px rgba(255, 107, 53, 0.35);
 }
@@ -914,4 +914,43 @@ tbody td {
 /* ── FAB: hidden always (inline button used on mobile instead) ── */
 .fab-fan {
     display: none;
+}
+
+.btn-view-all {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    color: #4a5568;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+}
+
+.btn-view-all:hover {
+    /* background-color: #e2e8f0; */
+    color: #2d3748;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.btn-view-all i {
+    margin-left: 8px;
+    font-size: 12px;
+}
+
+/* Responsif untuk Mobile */
+@media (max-width: 600px) {
+    .log-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 12px;
+    }
+
+    .btn-view-all {
+        width: 100%;
+        justify-content: center;
+    }
 }

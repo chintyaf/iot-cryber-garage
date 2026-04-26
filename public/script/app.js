@@ -6,8 +6,5 @@ function updateClock() {
         { hour12: false },
     );
 }
-setInterval(updateClock, 1000);
+setInterval(updateClock, 5000);
 updateClock();
-
-
-
