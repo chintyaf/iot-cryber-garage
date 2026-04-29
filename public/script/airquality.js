@@ -85,8 +85,8 @@ async function fetchSensorData() {
 
 // 4. Inisialisasi & Polling
 fetchSensorData();
-const delay = 1 * 60 * 1000;
-setInterval(fetchSensorData, delay);
+// const delay = 1 * 60 * 1000;
+// setInterval(fetchSensorData, delay);
 
 // Konfigurasi Echo yang Dinamis
 // window.Pusher = Pusher;

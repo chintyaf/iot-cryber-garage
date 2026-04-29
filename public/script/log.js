@@ -77,4 +77,4 @@ async function loadSystemLogs() {
 loadSystemLogs();
 
 // (Opsional) Refresh data log otomatis setiap 5 detik
-setInterval(loadSystemLogs, 5000);
+// setInterval(loadSystemLogs, 5000);

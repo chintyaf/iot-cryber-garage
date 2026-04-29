@@ -77,4 +77,4 @@ async function renderParkChart() {
 // Jalankan fungsi
 renderParkChart();
 
-setInterval(renderParkChart, 5 * 60 * 1000);
+// setInterval(renderParkChart, 5 * 60 * 1000);
